@@ -5,11 +5,11 @@ import messageApi from "./components/pop-message";
 
 function App() {
   const popWarningMessage = () => {
-    messageApi.warn("This is a warning message!", 1000000);
+    messageApi.warn("This is a warning message!");
   };
 
   const popsuccessMessage = () => {
-    messageApi.success("This is a success message!.");
+    messageApi.success("This is a success message!");
   };
 
   return (
