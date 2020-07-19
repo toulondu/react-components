@@ -1,38 +1,64 @@
 This project is a record of the common components that I implemented by react in my daily work.
 
-## Available Scripts
+# Available Components
 
-In the project directory, you can run:
+## Pop-Message
 
-### `yarn start`
+A pop message component, which can be used to show a success/warning/error/info message at the middle of the device screen.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### used like:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
+import messageApi from "./components/pop-message";
 
-### `yarn test`
+function App() {
+  const popWarningMessage = () => {
+    messageApi.warn("This is a warning message!", 1000000);
+  };
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  const popSuccessMessage = () => {
+    messageApi.success("This is a success message!.");
+  };
 
-### `yarn build`
+  return (
+    <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>Example of message.</p>
+        <button onClick={popWarningMessage}>click to pop a warning message.</button>
+        <button onClick={popSuccessMessage}>click to pop a succeed message.</button>
+      </header>
+    </div>
+  );
+}
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Apis:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```
+export interface MessageApi {
+  /**
+   * show diffent type of message(弹出不同类型的信息框)
+   * @param content content of the message. (信息框内容)
+   * @param duration How log the message will last. (在屏幕上的存在时间)
+   * @param onClose callback when the message box is close. (关闭时触发的事件)
+   */
+  info(content: contentType, duration?: durationType, onClose?: () => void): () => void;
+  success(content: React.ReactNode | string, duration?: durationType, onClose?: () => void): () => void;
+  error(content: React.ReactNode | string, duration?: durationType, onClose?: () => void): () => void;
+  warn(content: React.ReactNode | string, duration?: durationType, onClose?: () => void): () => void;
+  warning(content: React.ReactNode | string, duration?: durationType, onClose?: () => void): () => void;
+  open(args: HintArgs): void;
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  //destroy the element register to the DOM.(销毁注册在DOM上的元素)
+  destroy(): void;
+}
+```
 
-### `yarn eject`
+### looks like:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**normal**:  
+![image](./public/readme/warning.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+\*\*multiple messages:
+![image](./public/readme/mutiple_messages.png)
