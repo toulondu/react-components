@@ -60,5 +60,61 @@ export interface MessageApi {
 **normal**:  
 ![image](./public/readme/warning.png)
 
-**multiple messages**:
+**multiple messages**:  
 ![image](./public/readme/mutiple_messages.png)
+
+## Steps
+
+A component to show steps progress, supporting click event and step icon customize.  
+Also Planning to add some style api such as direction to define the component's derection.
+
+### Used like
+
+```
+const Demo: FC = () => {
+  const [currentType, changeType] = useState('');
+  return (
+    <Steps current={stepCurrent}>
+      <Step description="Step1"></Step>
+      <Step
+        description="Step2"
+        onClick={() => {
+          setStep(1);
+        }}
+      ></Step>
+      <Step description="Step3"></Step>
+    </Steps>
+  );
+};
+```
+
+### Api
+
+```
+//Steps api
+interface IStepsProps {
+  direction?: 'horizontal' | 'vertical'; //预留：指定步骤条方向。
+  labelPlacement?: 'horizontal' | 'vertical'; //预留：指定标签放置位置，horizontal水平放图标，vertical 放图标下方
+  size?: 'default' | 'small' | 'big'; //预留：指定大小
+  current?: number; //指定当前步骤，从 0 开始记数。在子 Step 元素中，可以通过 status 属性覆盖状态
+  onChange?: (current: number) => void; //点击切换步骤时触发
+  children?: React.ReactNode;
+  className?: string; //最外层元素className
+}
+
+//Step api
+interface IStepProps {
+  status?: 'wait' | 'process' | 'finish' | 'error'; //指定状态
+  icon?: ReactNode; //指定图标
+  description?: string | ReactNode; //step描述
+  title?: string | ReactNode;     //step 标题
+  stepNumber?: number;
+  stepIndex?: number;
+  disabled?: boolean; //预留
+  onClick?: (next: number) => void;
+}
+```
+
+### Looks like
+
+![image](./public/readme/steps.png)
