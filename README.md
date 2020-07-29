@@ -2,7 +2,7 @@ This project is a record of the common components that I implemented by react in
 
 # Available Components
 
-## Pop-Message
+## 1.Pop-Message
 
 A pop message component, which can be used to show a success/warning/error/info message at the middle of the device screen.
 
@@ -63,7 +63,7 @@ export interface MessageApi {
 **multiple messages**:  
 ![image](./public/readme/mutiple_messages.png)
 
-## Steps
+## 2.Steps
 
 A component to show steps progress, supporting click event and step icon customize.  
 Also Planning to add some style api such as direction to define the component's derection.
@@ -118,3 +118,55 @@ interface IStepProps {
 ### Looks like
 
 ![image](./public/readme/steps.png)
+
+## Img-Picker
+
+A image upload and preview component.
+
+### used like:
+
+```
+const Demo: FC = () => {
+  const data = [];
+  const [files, changeFiles] = useState(data);
+  const onChange = (files, type, index) => {
+    console.log(files, type, index);
+    changeFiles(files);
+  };
+
+  return (
+    <ImgPicker
+      files={files}
+      onChange={onChange}
+      onImageClick={(idx, fs) => console.log(idx, fs)}
+      selectable={files.length < 3}
+    />
+  );
+};
+```
+
+### api:
+
+```
+export interface ImgPickerProps {
+  style?: React.CSSProperties; //组件最外层div样式
+  files?: Array<ImageFile>; //初始数据
+  onChange?: (files: Array<ImageFile>, operationType: string, index?: number) => void;
+  onImageClick?: (index?: number, files?: Array<ImageFile>) => void; //点击图片时回调
+  onAddImageClick?: (e: React.MouseEvent) => void; //点击添加按钮时回调
+  onFail?: (msg: string) => void; //上传失败时回调
+  selectable?: boolean; //是否显示添加按钮，比如身份证正反面，上传2张后关闭添加功能
+  multiple?: boolean; //同type=file时，input的multiple属性,是否多选
+  accept?: string; //同type=file时，input的accept属性，接受文件类型
+  capture?: boolean | string; //同type=file时，input的capture属性，调用摄像头相关
+  disableDelete?: boolean; // 是否隐藏删除按钮，默认false
+}
+```
+
+### looks like:
+
+upload:  
+![image](./public/readme/img_picker.png)
+
+preview:  
+![image](./public/readme/img_picker_preview.png)
